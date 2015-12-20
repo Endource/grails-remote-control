@@ -44,4 +44,24 @@ class RemoteControlSpec extends Specification {
             ctx.grailsApplication instanceof GrailsApplication
         }
     }
+
+    def "a remote command can create and manipulate domain data in a hibernate session that is flushed at the end" () {
+        when:
+        def id = remote {
+            def person = new Person (name: "Me")
+            person.save ()
+            person.id
+        }
+
+        then:
+        remote { Person.countByName("Me") } == 1
+
+        when:
+        remote {
+            Person.get (id).delete ()
+        }
+
+        then:
+        remote { Person.countByName("Me") } == 0
+    }
 }

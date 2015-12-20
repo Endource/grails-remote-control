@@ -70,6 +70,10 @@ dependencies {
 
     testCompile "org.grails:grails-plugin-testing"
 
+    testRuntime 'org.grails.plugins:hibernate'
+    testRuntime 'org.grails.plugins:cache'
+    testRuntime 'org.hibernate:hibernate-ehcache'
+
     console "org.grails:grails-console"
 }
 
