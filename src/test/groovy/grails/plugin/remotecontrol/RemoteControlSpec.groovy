@@ -15,6 +15,7 @@
  */
 package grails.plugin.remotecontrol
 
+import grails.core.GrailsApplication
 import grails.test.mixin.integration.Integration
 import spock.lang.Specification
 
@@ -35,5 +36,12 @@ class RemoteControlSpec extends Specification {
     def "the result of the command run on the server is sent back and is returned" () {
         expect:
         remote { 1 + 1 } == 2
+    }
+
+    def "the remote command has access to the app context to access any bean defined there" () {
+        expect:
+        remote {
+            ctx.grailsApplication instanceof GrailsApplication
+        }
     }
 }
