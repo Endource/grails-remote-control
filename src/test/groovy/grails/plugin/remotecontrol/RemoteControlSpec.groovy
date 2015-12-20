@@ -168,6 +168,17 @@ class RemoteControlSpec extends Specification {
         thrown (ClassNotFoundException)
     }
 
+    @Ignore("does not fail....")
+    def "a command can not instantiate a class that is not in the remote app" () {
+        when:
+        remote {
+            new RemoteControlLocal ()
+        }
+
+        then:
+        thrown (NoClassDefFoundError)
+    }
+
 }
 
 class RemoteControlLocal implements Serializable {}
