@@ -13,8 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package grails.plugin.remotecontrol
+package grails.plugin
 
+import grails.plugin.remotecontrol.RemoteControl
+import grails.plugin.remotecontrol.RemoteControlServlet
 import grails.plugins.Plugin
 import grails.util.BuildSettings
 import grails.web.mapping.LinkGenerator
