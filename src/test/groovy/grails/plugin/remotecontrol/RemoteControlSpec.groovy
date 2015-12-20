@@ -202,6 +202,28 @@ class RemoteControlSpec extends Specification {
         thrown (MissingPropertyException)
     }
 
+    def "a command can set properties of a remote bean" () {
+        when:
+        remote { ctx.theService.value = 1 }
+
+        then:
+        1 == remote { ctx.theService.value }
+
+
+        when:
+        remote { ctx.theService.setValue (2) }
+
+        then:
+        2 == remote { ctx.theService.value }
+
+
+        when:
+        remote { ctx.theService.setProperty('value', 3) }
+
+        then:
+        3 == remote { ctx.theService.value }
+    }
+
 }
 
 class RemoteControlLocal implements Serializable {}
