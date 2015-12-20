@@ -224,6 +224,22 @@ class RemoteControlSpec extends Specification {
         3 == remote { ctx.theService.value }
     }
 
+    def "a command can call methods dynamically" () {
+        def methodName = "setValue"
+
+        when:
+        remote { ctx.theService."$methodName"(1) }
+
+        then:
+        1 == remote { ctx.theService.value }
+
+        when:
+        remote { ctx.theService.invokeMethod(methodName, 2) }
+
+        then:
+        2 == remote { ctx.theService.value }
+    }
+
 }
 
 class RemoteControlLocal implements Serializable {}
