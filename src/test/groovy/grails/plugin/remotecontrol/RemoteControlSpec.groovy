@@ -18,6 +18,7 @@ package grails.plugin.remotecontrol
 import grails.core.GrailsApplication
 import grails.test.mixin.integration.Integration
 import io.remotecontrol.client.RemoteException
+import io.remotecontrol.client.UnserializableReturnException
 import spock.lang.Specification
 
 
@@ -83,6 +84,16 @@ class RemoteControlSpec extends Specification {
         RemoteException e = thrown ()
         e.cause.class == Exception
         e.cause.message == 'bang!'
+    }
+
+    def "if the command returns something that is unserializable, we throw an UnserializableReturnException" () {
+        when:
+        remote {
+            System.out
+        }
+
+        then:
+        thrown (UnserializableReturnException)
     }
 
 }
