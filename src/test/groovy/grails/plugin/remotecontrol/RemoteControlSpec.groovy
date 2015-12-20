@@ -138,4 +138,14 @@ class RemoteControlSpec extends Specification {
         expect:
         4 == remote (command.curry (2))
     }
+
+    def "we can curry a command as many times as we need to" () {
+        def command = { a, b -> a + b }
+        def curry1 = command.curry (1)
+        def curry2 = curry1.curry (1)
+
+        expect:
+        2 == remote (curry2)
+    }
+
 }
