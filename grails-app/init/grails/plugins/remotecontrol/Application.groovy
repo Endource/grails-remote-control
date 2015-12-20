@@ -1,4 +1,4 @@
-package remotecontrol
+package grails.plugins.remotecontrol
 
 import grails.boot.GrailsApp
 import grails.boot.config.GrailsAutoConfiguration

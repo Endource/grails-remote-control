@@ -1,4 +1,4 @@
-package remotecontrol
+package grails.plugins.remotecontrol
 
 import grails.plugins.*
 
