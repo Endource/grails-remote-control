@@ -65,6 +65,7 @@ dependencies {
     }
     compile ("io.remotecontrol:remote-transport-http:0.7") {
         exclude group: "org.codehaus.groovy"
+        exclude module: "servlet-api"
     }
 
     testCompile "org.grails:grails-plugin-testing"
