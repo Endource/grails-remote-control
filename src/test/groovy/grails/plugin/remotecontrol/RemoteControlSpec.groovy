@@ -96,4 +96,9 @@ class RemoteControlSpec extends Specification {
         thrown (UnserializableReturnException)
     }
 
+    def "if the command returns an exception but does not throw it, we just return the exception" () {
+        expect:
+        remote { new Exception () } instanceof Exception
+    }
+
 }
