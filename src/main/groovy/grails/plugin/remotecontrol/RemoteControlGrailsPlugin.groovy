@@ -15,7 +15,8 @@
  */
 package grails.plugin.remotecontrol
 
-import grails.plugins.*
+import grails.plugins.Plugin
+import org.springframework.boot.context.embedded.ServletRegistrationBean
 
 
 class RemoteControlGrailsPlugin extends Plugin {
@@ -52,12 +53,13 @@ class RemoteControlGrailsPlugin extends Plugin {
     def scm = [ url: "https://github.com/alkemist/grails-remote-control" ]
 
     Closure doWithSpring() { {->
-            // TODO Implement runtime spring config (optional)
+        remoteControl (ServletRegistrationBean, new RemoteControlServlet (), "/${RemoteControl.RECEIVER_PATH}") {
+            name = 'grails-remote-control'
+            loadOnStartup = 1
         }
-    }
+    } }
 
     void doWithDynamicMethods() {
-        // TODO Implement registering dynamic methods to classes (optional)
     }
 
     void doWithApplicationContext() {
@@ -65,17 +67,14 @@ class RemoteControlGrailsPlugin extends Plugin {
     }
 
     void onChange(Map<String, Object> event) {
-        // TODO Implement code that is executed when any artefact that this plugin is
         // watching is modified and reloaded. The event contains: event.source,
         // event.application, event.manager, event.ctx, and event.plugin.
     }
 
     void onConfigChange(Map<String, Object> event) {
-        // TODO Implement code that is executed when the project configuration changes.
         // The event is the same as for 'onChange'.
     }
 
     void onShutdown(Map<String, Object> event) {
-        // TODO Implement code that is executed when the application shuts down (optional)
     }
 }
