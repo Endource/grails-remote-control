@@ -37,6 +37,10 @@ class RemoteControlSpec extends Specification {
         remoteControl code
     }
 
+    def remote (Closure... codes) {
+        remoteControl codes
+    }
+
     def "the result of the command run on the server is sent back and is returned" () {
         expect:
         remote { 1 + 1 } == 2
@@ -179,6 +183,10 @@ class RemoteControlSpec extends Specification {
         thrown (NoClassDefFoundError)
     }
 
+    def "multiple commands can be chained, passing each result to the next command as it's single argument" () {
+        expect:
+        3 == remote ({ 1 }, { it + 1 }, { it + 1 })
+    }
 }
 
 class RemoteControlLocal implements Serializable {}
