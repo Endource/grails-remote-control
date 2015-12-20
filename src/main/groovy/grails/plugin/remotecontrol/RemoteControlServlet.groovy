@@ -55,10 +55,10 @@ class RemoteControlServlet extends io.remotecontrol.transport.http.RemoteControl
 
 	boolean isEnabled() {
 		def configValue = grailsApplication.config.remoteControl.enabled
-		if (configValue instanceof ConfigObject) {
-			getDefaultIsEnabledForEnvironment()
-		} else {
+		if (configValue instanceof Boolean) {
 			configValue
+		} else {
+			getDefaultIsEnabledForEnvironment()
 		}
 	}
 
