@@ -17,6 +17,7 @@ package grails.plugin.remotecontrol
 
 import grails.core.GrailsApplication
 import grails.test.mixin.integration.Integration
+import io.remotecontrol.UnserializableCommandException
 import io.remotecontrol.client.RemoteException
 import io.remotecontrol.client.UnserializableReturnException
 import spock.lang.Specification
@@ -106,6 +107,17 @@ class RemoteControlSpec extends Specification {
 
         expect:
         2 == remote { a + 1 }
+    }
+
+    def "anything in lexical scope we access must be serializable" () {
+        when:
+        def a = System.out
+        remote {
+            a
+        }
+
+        then:
+        thrown (UnserializableCommandException)
     }
 
 }
