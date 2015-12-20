@@ -17,6 +17,7 @@ package grails.plugin.remotecontrol
 
 import grails.core.GrailsApplication
 import grails.test.mixin.integration.Integration
+import io.remotecontrol.client.RemoteException
 import spock.lang.Specification
 
 
@@ -70,6 +71,18 @@ class RemoteControlSpec extends Specification {
         [2, 3, 4] == remote {
             [1, 2, 3].collect { it + 1 }
         }
+    }
+
+    def "if the command throws, we throw a RemoteException client side with the actual exception as the cause" () {
+        when:
+        remote {
+            throw new Exception ('bang!')
+        }
+
+        then:
+        RemoteException e = thrown ()
+        e.cause.class == Exception
+        e.cause.message == 'bang!'
     }
 
 }
