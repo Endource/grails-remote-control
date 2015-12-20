@@ -16,6 +16,8 @@
 package grails.plugin.remotecontrol
 
 import grails.plugins.Plugin
+import grails.util.BuildSettings
+import grails.web.mapping.LinkGenerator
 import org.springframework.boot.context.embedded.ServletRegistrationBean
 
 
@@ -62,8 +64,12 @@ class RemoteControlGrailsPlugin extends Plugin {
     void doWithDynamicMethods() {
     }
 
-    void doWithApplicationContext() {
-        // TODO Implement post initialization spring config (optional)
+    void doWithApplicationContext () {
+        def ctx = grailsApplication.mainContext
+        LinkGenerator linkGenerator = ctx.getBean ("grailsLinkGenerator", LinkGenerator)
+
+        functionalBaseUrl = linkGenerator.serverBaseURL
+        System.setProperty (BuildSettings.FUNCTIONAL_BASE_URL_PROPERTY, functionalBaseUrl)
     }
 
     void onChange(Map<String, Object> event) {
