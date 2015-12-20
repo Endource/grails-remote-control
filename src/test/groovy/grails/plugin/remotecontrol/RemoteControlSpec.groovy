@@ -120,4 +120,16 @@ class RemoteControlSpec extends Specification {
         thrown (UnserializableCommandException)
     }
 
+    def anIvar = 2
+    def "owner ivars can't be accessed because they aren't really lexical scope, so get treated as bean names from the app context" () {
+        when:
+        remote {
+            anIvar * 2
+        }
+
+        then:
+        RemoteException e = thrown ()
+        e.cause instanceof MissingPropertyException
+    }
+
 }
