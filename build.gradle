@@ -60,6 +60,13 @@ dependencies {
     provided "org.grails:grails-dependencies"
     provided 'javax.servlet:javax.servlet-api:3.1.0'
 
+    compile ("io.remotecontrol:remote-core:0.7") {
+        exclude group: "org.codehaus.groovy"
+    }
+    compile ("io.remotecontrol:remote-transport-http:0.7") {
+        exclude group: "org.codehaus.groovy"
+    }
+
     testCompile "org.grails:grails-plugin-testing"
 
     console "org.grails:grails-console"
