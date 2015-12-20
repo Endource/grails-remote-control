@@ -64,4 +64,12 @@ class RemoteControlSpec extends Specification {
         then:
         remote { Person.countByName("Me") } == 0
     }
+
+    def "commands can contain other closures" () {
+        expect:
+        [2, 3, 4] == remote {
+            [1, 2, 3].collect { it + 1 }
+        }
+    }
+
 }
