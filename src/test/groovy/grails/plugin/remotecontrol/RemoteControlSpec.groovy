@@ -101,4 +101,11 @@ class RemoteControlSpec extends Specification {
         remote { new Exception () } instanceof Exception
     }
 
+    def "we can access lexical scope (within limits)" () {
+        def a = 1
+
+        expect:
+        2 == remote { a + 1 }
+    }
+
 }
