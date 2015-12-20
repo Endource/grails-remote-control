@@ -132,4 +132,10 @@ class RemoteControlSpec extends Specification {
         e.cause instanceof MissingPropertyException
     }
 
+    def "we can pass curried commands" () {
+        def command = { it + 2 }
+
+        expect:
+        4 == remote (command.curry (2))
+    }
 }
