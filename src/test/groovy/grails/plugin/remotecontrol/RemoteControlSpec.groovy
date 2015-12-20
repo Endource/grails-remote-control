@@ -193,6 +193,15 @@ class RemoteControlSpec extends Specification {
         3 == remote ({ num = 1 }, { num = num + 1 }, { num + 1 })
     }
 
+    @Ignore("fails with wrong exception....")
+    def "accessing a property that is not in the delegate causes a MissingPropertyException" () {
+        when:
+        remote { iDontExist == true }
+
+        then:
+        thrown (MissingPropertyException)
+    }
+
 }
 
 class RemoteControlLocal implements Serializable {}
