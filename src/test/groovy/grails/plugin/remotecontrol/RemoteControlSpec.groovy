@@ -148,4 +148,12 @@ class RemoteControlSpec extends Specification {
         2 == remote (curry2)
     }
 
+    def "currying args must be serializable" () {
+        when:
+        remote ({ it }.curry (System.out))
+
+        then:
+        thrown (UnserializableCommandException)
+    }
+
 }
