@@ -187,6 +187,12 @@ class RemoteControlSpec extends Specification {
         expect:
         3 == remote ({ 1 }, { it + 1 }, { it + 1 })
     }
+
+    def "the delegate of commands is like a map and can store properties" () {
+        expect:
+        3 == remote ({ num = 1 }, { num = num + 1 }, { num + 1 })
+    }
+
 }
 
 class RemoteControlLocal implements Serializable {}
