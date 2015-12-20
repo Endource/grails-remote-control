@@ -20,6 +20,7 @@ import grails.test.mixin.integration.Integration
 import io.remotecontrol.UnserializableCommandException
 import io.remotecontrol.client.RemoteException
 import io.remotecontrol.client.UnserializableReturnException
+import spock.lang.Ignore
 import spock.lang.Specification
 
 
@@ -156,4 +157,17 @@ class RemoteControlSpec extends Specification {
         thrown (UnserializableCommandException)
     }
 
+    @Ignore("does not fail....")
+    def "any class referenced has to be available in the remote app, classes defined in test are not" () {
+        def a = new RemoteControlLocal()
+
+        when:
+        remote { a }
+
+        then:
+        thrown (ClassNotFoundException)
+    }
+
 }
+
+class RemoteControlLocal implements Serializable {}
