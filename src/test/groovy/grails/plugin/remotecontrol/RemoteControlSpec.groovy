@@ -65,14 +65,14 @@ class RemoteControlSpec extends Specification {
         remote { 1 + 1 } == 2
     }
 
-    def "the remote command has access to the app context to access any bean defined there" () {
+    def "the command has access to the app context to access any bean defined there" () {
         expect:
         remote {
             ctx.grailsApplication instanceof GrailsApplication
         }
     }
 
-    def "a remote command can create and manipulate domain data in a hibernate session that is flushed at the end" () {
+    def "a command can create and manipulate domain data in a hibernate session that is flushed at the end" () {
         when:
         def id = remote {
             def person = new Person (name: "Me")
