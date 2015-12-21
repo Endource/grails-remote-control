@@ -183,7 +183,7 @@ class RemoteControlSpec extends Specification {
         thrown (UnserializableCommandException)
     }
 
-    @Ignore("does not fail....")
+    @Ignore("application and tests are run in the same jvm, the test class is accessible.")
     def "any class referenced has to be available in the remote app, classes defined in test are not" () {
         def a = new RemoteControlLocal()
 
@@ -194,7 +194,7 @@ class RemoteControlSpec extends Specification {
         thrown (ClassNotFoundException)
     }
 
-    @Ignore("does not fail....")
+    @Ignore("application and tests are run in the same jvm, the test class is accessible.")
     def "a command can not instantiate a class that is not in the remote app" () {
         when:
         remote {
@@ -215,7 +215,7 @@ class RemoteControlSpec extends Specification {
         3 == remote ({ num = 1 }, { num = num + 1 }, { num + 1 })
     }
 
-    @Ignore("fails with wrong exception....")
+    @Ignore("fails with RemoteException instead of MissingPropertyException.")
     def "accessing a property that is not in the delegate causes a MissingPropertyException" () {
         when:
         remote { iDontExist == true }
