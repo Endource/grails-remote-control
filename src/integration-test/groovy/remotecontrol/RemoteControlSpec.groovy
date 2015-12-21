@@ -16,6 +16,7 @@
 package remotecontrol
 
 import grails.core.GrailsApplication
+import grails.plugin.remotecontrol.Application
 import grails.plugin.remotecontrol.Person
 import grails.plugin.remotecontrol.RemoteControl
 import grails.test.mixin.integration.Integration
@@ -45,7 +46,7 @@ import spock.lang.Specification
  * for testing purposes.
  */
 
-@Integration
+@Integration(applicationClass=Application)
 class RemoteControlSpec extends Specification {
     def remoteControl // can't initialize here because the plugin setup did not yet run.
 
