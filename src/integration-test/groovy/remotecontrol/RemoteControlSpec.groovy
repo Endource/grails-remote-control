@@ -24,6 +24,7 @@ import io.remotecontrol.UnserializableCommandException
 import io.remotecontrol.client.RemoteException
 import io.remotecontrol.client.UnserializableReturnException
 import spock.lang.Ignore
+import spock.lang.Requires
 import spock.lang.Specification
 
 
@@ -183,7 +184,10 @@ class RemoteControlSpec extends Specification {
         thrown (UnserializableCommandException)
     }
 
-    @Ignore("application and tests are run in the same jvm, the test class is accessible.")
+    // when running 'grails test-app' the application and tests run in the same jvm and the test
+    // classes are accessible. In that case the test will not fail. So we only run it when 'baseUrl'
+    // is set to test against an already running application.
+    @Requires({ System.getProperty("baseUrl") })
     def "any class referenced has to be available in the remote app, classes defined in test are not" () {
         def a = new RemoteControlLocal()
 
@@ -191,7 +195,23 @@ class RemoteControlSpec extends Specification {
         remote { a }
 
         then:
-        thrown (ClassNotFoundException)
+        RemoteException e = thrown ()
+        assertCause (e, ClassNotFoundException)
+    }
+
+    void assertCause (Throwable t, Class expected) {
+        Throwable cause = t.cause
+        while (true) {
+            if (!cause) {
+                assert null == expected
+            }
+            else if (cause.class == expected) {
+                return
+            }
+            else {
+                cause = cause.cause
+            }
+        }
     }
 
     @Ignore("application and tests are run in the same jvm, the test class is accessible.")
