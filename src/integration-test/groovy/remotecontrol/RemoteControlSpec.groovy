@@ -236,13 +236,14 @@ class RemoteControlSpec extends Specification {
         3 == remote ({ num = 1 }, { num = num + 1 }, { num + 1 })
     }
 
-    @Ignore("fails with RemoteException instead of MissingPropertyException.")
+    @Requires({ System.getProperty("baseUrl") })
     def "accessing a property that is not in the delegate causes a MissingPropertyException" () {
         when:
         remote { iDontExist == true }
 
         then:
-        thrown (MissingPropertyException)
+        RemoteException e = thrown ()
+        assertCause (e, MissingPropertyException)
     }
 
     def "a command can set properties of a remote bean" () {
