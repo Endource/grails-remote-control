@@ -67,10 +67,7 @@ class RemoteControlGrailsPlugin extends Plugin {
     }
 
     void doWithApplicationContext () {
-        def ctx = grailsApplication.mainContext
-        LinkGenerator linkGenerator = ctx.getBean ("grailsLinkGenerator", LinkGenerator)
-
-        System.setProperty (BuildSettings.FUNCTIONAL_BASE_URL_PROPERTY, linkGenerator.serverBaseURL)
+        System.setProperty (BuildSettings.FUNCTIONAL_BASE_URL_PROPERTY, getBaseUrl ())
     }
 
     void onChange(Map<String, Object> event) {
@@ -83,5 +80,19 @@ class RemoteControlGrailsPlugin extends Plugin {
     }
 
     void onShutdown(Map<String, Object> event) {
+    }
+
+    private String getBaseUrl () {
+        String baseUrl = System.getProperty ('baseUrl')
+        if (!baseUrl) {
+            baseUrl = getDefaultBaseUrl ()
+        }
+        baseUrl
+    }
+
+    private String getDefaultBaseUrl () {
+        def ctx = grailsApplication.mainContext
+        LinkGenerator linkGenerator = ctx.getBean ("grailsLinkGenerator", LinkGenerator)
+        linkGenerator.serverBaseURL
     }
 }
