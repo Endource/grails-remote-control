@@ -214,7 +214,7 @@ class RemoteControlSpec extends Specification {
         }
     }
 
-    @Ignore("application and tests are run in the same jvm, the test class is accessible.")
+    @Requires({ System.getProperty("baseUrl") })
     def "a command can not instantiate a class that is not in the remote app" () {
         when:
         remote {
@@ -222,7 +222,8 @@ class RemoteControlSpec extends Specification {
         }
 
         then:
-        thrown (NoClassDefFoundError)
+        RemoteException e = thrown ()
+        assertCause (e, NoClassDefFoundError)
     }
 
     def "multiple commands can be chained, passing each result to the next command as it's single argument" () {
