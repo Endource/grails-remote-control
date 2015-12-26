@@ -68,11 +68,11 @@ dependencies {
         exclude module: "servlet-api"
     }
 
-    testCompile "org.grails:grails-plugin-testing"
+    runtime 'org.grails.plugins:cache'
+    runtime 'org.hibernate:hibernate-ehcache'
+    runtime 'org.grails.plugins:hibernate'
 
-    testRuntime 'org.grails.plugins:hibernate'
-    testRuntime 'org.grails.plugins:cache'
-    testRuntime 'org.hibernate:hibernate-ehcache'
+    testCompile "org.grails:grails-plugin-testing"
 
     console "org.grails:grails-console"
 }
