@@ -23,8 +23,6 @@ import grails.test.mixin.integration.Integration
 import io.remotecontrol.UnserializableCommandException
 import io.remotecontrol.client.RemoteException
 import io.remotecontrol.client.UnserializableReturnException
-import spock.lang.Ignore
-import spock.lang.Requires
 import spock.lang.Specification
 
 
@@ -184,48 +182,6 @@ class RemoteControlSpec extends Specification {
         thrown (UnserializableCommandException)
     }
 
-    // when running 'grails test-app' the application and tests run in the same jvm and the test
-    // classes are accessible. In that case the test will not fail. So we only run it when 'baseUrl'
-    // is set to test against an already running application.
-    @Requires({ System.getProperty("baseUrl") })
-    def "any class referenced has to be available in the remote app, classes defined in test are not" () {
-        def a = new RemoteControlLocal()
-
-        when:
-        remote { a }
-
-        then:
-        RemoteException e = thrown ()
-        assertCause (e, ClassNotFoundException)
-    }
-
-    void assertCause (Throwable t, Class expected) {
-        Throwable cause = t.cause
-        while (true) {
-            if (!cause) {
-                assert null == expected
-            }
-            else if (cause.class == expected) {
-                return
-            }
-            else {
-                cause = cause.cause
-            }
-        }
-    }
-
-    @Requires({ System.getProperty("baseUrl") })
-    def "a command can not instantiate a class that is not in the remote app" () {
-        when:
-        remote {
-            new RemoteControlLocal ()
-        }
-
-        then:
-        RemoteException e = thrown ()
-        assertCause (e, NoClassDefFoundError)
-    }
-
     def "multiple commands can be chained, passing each result to the next command as it's single argument" () {
         expect:
         3 == remote ({ 1 }, { it + 1 }, { it + 1 })
@@ -234,16 +190,6 @@ class RemoteControlSpec extends Specification {
     def "the delegate of commands is like a map and can store properties" () {
         expect:
         3 == remote ({ num = 1 }, { num = num + 1 }, { num + 1 })
-    }
-
-    @Requires({ System.getProperty("baseUrl") })
-    def "accessing a property that is not in the delegate causes a MissingPropertyException" () {
-        when:
-        remote { iDontExist == true }
-
-        then:
-        RemoteException e = thrown ()
-        assertCause (e, MissingPropertyException)
     }
 
     def "a command can set properties of a remote bean" () {
@@ -285,5 +231,3 @@ class RemoteControlSpec extends Specification {
     }
 
 }
-
-class RemoteControlLocal implements Serializable {}
