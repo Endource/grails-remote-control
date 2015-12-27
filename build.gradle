@@ -77,6 +77,14 @@ dependencies {
     console "org.grails:grails-console"
 }
 
+integrationTest {
+    systemProperties System.properties
+
+    testLogging {
+        showStandardStreams = true
+    }
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = gradleWrapperVersion
 }
