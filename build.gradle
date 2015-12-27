@@ -83,6 +83,8 @@ integrationTest {
     testLogging {
         showStandardStreams = true
     }
+
+    //outputs.upToDateWhen { false }
 }
 
 task wrapper(type: Wrapper) {
