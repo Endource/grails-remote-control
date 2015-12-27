@@ -18,7 +18,7 @@ package remotecontrol
 import grails.core.GrailsApplication
 import grails.plugin.remotecontrol.Application
 import grails.plugin.remotecontrol.Person
-import grails.plugin.remotecontrol.RemoteControl
+import grails.plugin.remotecontrol.Remote
 import grails.test.mixin.integration.Integration
 import io.remotecontrol.UnserializableCommandException
 import io.remotecontrol.client.RemoteException
@@ -46,20 +46,10 @@ import spock.lang.Specification
  */
 
 @Integration(applicationClass=Application)
-class RemoteControlSpec extends Specification {
-    def remoteControl // can't initialize here because the plugin setup did not yet run.
+class RemoteControlSpec extends Specification implements Remote {
 
     def setup () {
-        remoteControl = new RemoteControl()
-    }
-
-    // work around "MissingMethodException" when calling `remoteControl` inline
-    def remote (Closure code) {
-        remoteControl code
-    }
-
-    def remote (Closure... codes) {
-        remoteControl codes
+        initRemote ()
     }
 
     def "the result of the command run on the server is sent back and is returned" () {

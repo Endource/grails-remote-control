@@ -16,7 +16,7 @@
 package remotecontrol
 
 import grails.plugin.remotecontrol.Application
-import grails.plugin.remotecontrol.RemoteControl
+import grails.plugin.remotecontrol.Remote
 import grails.test.mixin.integration.Integration
 import io.remotecontrol.client.RemoteException
 import spock.lang.Requires
@@ -34,15 +34,10 @@ import spock.lang.Specification
 
 @Requires({ System.getProperty("baseUrl") })
 @Integration(applicationClass=Application)
-class JvmRemoteControlSpec extends Specification {
-    def remoteControl // can't initialize here because the plugin setup did not yet run.
+class JvmRemoteControlSpec extends Specification implements Remote {
 
     def setup () {
-        remoteControl = new RemoteControl()
-    }
-
-    def remote (Closure... codes) {
-        remoteControl codes
+        initRemote ()
     }
 
     def "any class referenced has to be available in the remote app, classes defined in test are not" () {
@@ -74,20 +69,5 @@ class JvmRemoteControlSpec extends Specification {
         then:
         RemoteException e = thrown ()
         assertCause (e, MissingPropertyException)
-    }
-
-    void assertCause (Throwable t, Class expected) {
-        Throwable cause = t.cause
-        while (true) {
-            if (!cause) {
-                assert null == expected
-            }
-            else if (cause.class == expected) {
-                return
-            }
-            else {
-                cause = cause.cause
-            }
-        }
     }
 }
