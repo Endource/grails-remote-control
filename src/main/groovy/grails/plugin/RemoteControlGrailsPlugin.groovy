@@ -20,10 +20,12 @@ import grails.plugin.remotecontrol.RemoteControlServlet
 import grails.plugins.Plugin
 import grails.util.BuildSettings
 import grails.web.mapping.LinkGenerator
+import org.apache.commons.logging.LogFactory
 import org.springframework.boot.context.embedded.ServletRegistrationBean
 
 
 class RemoteControlGrailsPlugin extends Plugin {
+    private static LOG = LogFactory.getLog(this)
 
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "3.0.9 > *"
@@ -67,7 +69,9 @@ class RemoteControlGrailsPlugin extends Plugin {
     }
 
     void doWithApplicationContext () {
-        System.setProperty (BuildSettings.FUNCTIONAL_BASE_URL_PROPERTY, getBaseUrl ())
+        String baseUrl = getBaseUrl ()
+        System.setProperty (BuildSettings.FUNCTIONAL_BASE_URL_PROPERTY, baseUrl)
+        LOG.info "using grails application runing at ${baseUrl}"
     }
 
     void onChange(Map<String, Object> event) {
