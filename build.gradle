@@ -77,6 +77,10 @@ dependencies {
     console "org.grails:grails-console"
 }
 
+jar {
+  exclude "grails/plugin/remotecontrol/Person.class"
+}
+
 integrationTest {
     systemProperties System.properties
 
