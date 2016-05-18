@@ -31,7 +31,7 @@ class RemoteControlGrailsPlugin extends Plugin {
     def grailsVersion = "3.0.9 > *"
     // resources that are excluded from plugin packaging
     def pluginExcludes = [
-        "**/grails/plugin/remotecontrol/Person.class"
+        "grails/plugin/remotecontrol/**"
     ]
 
     def title = "Remote Control" // Headline display name of the plugin
