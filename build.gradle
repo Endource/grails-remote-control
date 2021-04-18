@@ -98,7 +98,7 @@ publishing {
 
     publications {
         maven(MavenPublication) {
-            groupId group
+            groupId project.group
             artifactId 'remote-control'
             version project.version
 
