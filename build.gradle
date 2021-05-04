@@ -109,13 +109,13 @@ publishing {
                 Node pomNode = asNode()
                 pomNode.dependencies.'*'.findAll() {
                     it.groupId.text().contains("org.grails") ||
-                            it.groupId.text().contains("org.hibernate") ||
-                            it.groupId.text().contains("org.springframework") ||
-                            it.groupId.text().contains("com.h2database")
+                    it.groupId.text().contains("org.hibernate") ||
+                    it.groupId.text().contains("org.springframework") ||
+                    it.groupId.text().contains("com.h2database")
                 }.each() {
                     it.parent().remove(it)
                 }
-            }
+            }   
         }
     }
 }
